@@ -1,0 +1,4 @@
+OpportunityPublicId,MentorUserObjectId,Title,Description,Topic,DeliveryType,StartUtc,EndUtc,TimeZone,Language,Level,Prerequisites,Capacity,ReservedSeats,Status,Provenance
+opp-001,mentor-001,Azure architecture workshop shadowing,Observe how a mentor structures a technical architecture workshop and captures design decisions.,Azure Architecture,Workshop,2026-09-25T09:00:00Z,2026-09-25T10:30:00Z,Europe/Budapest,English,beginner,Basic familiarity with Azure concepts,2,0,Published,MentorScan
+opp-002,mentor-002,Power Platform solution review shadowing,Observe a structured solution review focused on implementation tradeoffs and governance considerations.,Power Platform,Implementation Review,2026-09-26T13:00:00Z,2026-09-26T14:00:00Z,Europe/Berlin,English,intermediate,Experience building a Power Platform app,1,0,Published,Manual
+
