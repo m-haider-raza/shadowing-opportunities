@@ -1,0 +1,4 @@
+CandidateId,MentorUserObjectId,SourceType,SourceReferenceHash,EventFingerprint,CorrelationEvidenceSummary,PrivateReviewSummary,ReviewVersion,Disposition,RiskFlags
+cand-001,mentor-001,CalendarEmailCorrelation,hash-source-001,hash-fingerprint-001,Email thread explicitly arranged a technical workshop and calendar event matches timing and participants.,Potential Azure architecture workshop. Attendance permission unknown; mentor must verify exact learner-visible text.,1,InReview,attendee_permission_unknown;needs_mentor_review
+cand-002,mentor-002,CalendarEmailCorrelation,hash-source-002,hash-fingerprint-002,Only shared participant and generic workshop term found; weak match.,Insufficient evidence for automated candidate classification.,1,Rejected,weak_email_correlation
+
