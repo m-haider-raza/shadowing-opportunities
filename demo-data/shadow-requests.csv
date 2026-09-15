@@ -1,0 +1,3 @@
+RequestPublicId,ActiveRequestKey,OpportunityPublicId,LearnerUserObjectId,MentorUserObjectId,LearnerObjective,Status,PlaceReserved,CoordinatorOutcome
+req-001,learner-001|opp-001,opp-001,learner-001,mentor-001,I want to understand how Azure architecture workshops are structured.,PendingMentor,true,Pending
+
