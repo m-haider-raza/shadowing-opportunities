@@ -1,0 +1,42 @@
+{
+  "name": "Shadowing - Per Mentor Scanner",
+  "owner": "Each mentor",
+  "trigger": {
+    "type": "recurrence",
+    "defaultFrequency": "daily",
+    "timeZone": "mentor profile time zone"
+  },
+  "connections": [
+    "Office 365 Outlook - mentor-owned",
+    "SharePoint",
+    "Microsoft Teams or Approvals",
+    "Approved AI classifier"
+  ],
+  "guards": [
+    "mentor profile exists",
+    "mentor enrollment status is Enrolled",
+    "scanner configuration ScanningEnabled is true",
+    "CalendarAndEmailConsent is true",
+    "flow activation owner hash matches mentor configuration"
+  ],
+  "processing": [
+    "read calendar view for configured lookahead window",
+    "pre-filter cancelled/private/sensitive/personal/HR/legal/performance events",
+    "compute event fingerprint",
+    "skip unchanged events",
+    "search bounded related email context",
+    "require corroborating evidence",
+    "classify with approved AI action",
+    "validate classifier JSON schema",
+    "store minimized private candidate",
+    "send private digest only when candidates changed",
+    "reconcile cancellations and material updates"
+  ],
+  "privacy": [
+    "exclude attachments",
+    "do not log raw body text",
+    "store only source hashes and minimized summaries",
+    "never publish without exact mentor approval"
+  ]
+}
+
