@@ -1,0 +1,25 @@
+{
+  "name": "Shadowing - Request Capacity and Mentor Approval",
+  "trigger": "Copilot Studio action from authenticated learner",
+  "idempotency": {
+    "activeRequestKey": "LearnerUserObjectId|OpportunityPublicId",
+    "duplicateBehavior": "return existing active request status"
+  },
+  "capacity": {
+    "reserveWhen": ["PendingMentor", "MentorApproved", "CoordinatorQueued", "InvitationArranged"],
+    "releaseWhen": ["MentorDeclined", "Withdrawn", "Cancelled", "Expired", "InvitationNotAuthorized"],
+    "method": "SharePoint item version/ETag or REST IF-MATCH update with bounded retries"
+  },
+  "authorization": [
+    "derive learner from authenticated identity",
+    "verify opportunity is Published",
+    "verify learner has pilot learner access",
+    "verify mentor approval callback actor owns the opportunity or is coordinator/admin"
+  ],
+  "nonGoals": [
+    "do not send meeting invitations",
+    "do not expose join links",
+    "do not treat mentor approval as attendance authorization"
+  ]
+}
+
