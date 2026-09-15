@@ -1,0 +1,69 @@
+topics:
+  - name: Become a mentor
+    triggerPhrases:
+      - Become a mentor
+      - Offer shadowing opportunities
+    actions:
+      - GetAuthenticatedUser
+      - VerifyGroupMembership: ${PILOT_MENTORS_GROUP}
+      - UpsertParticipantProfile
+      - UpsertScannerConfiguration
+      - ShowMentorScannerActivationGuide
+    notes:
+      - Explain calendar and relevant-email processing before consent.
+      - Distinguish enrolled from scanner activated.
+  - name: Review private candidates
+    triggerPhrases:
+      - Review my candidates
+      - Show shadowing drafts
+    actions:
+      - GetAuthenticatedUser
+      - ListPrivateCandidatesForCurrentMentor
+      - ApproveCandidateExactVersion
+      - EditCandidateDraft
+      - RejectCandidate
+    notes:
+      - Candidate source details are private to the owning mentor.
+      - Approval must bind to candidate ID and review version.
+  - name: Find opportunities
+    triggerPhrases:
+      - Find opportunities
+      - Find a beginner-friendly Azure session
+    actions:
+      - GetAuthenticatedUser
+      - SearchPublishedOpportunities
+      - RankByExplicitPreferences
+    notes:
+      - Calendar or email access must not be requested from learners.
+      - Search only published eligible opportunities.
+  - name: Request a place
+    triggerPhrases:
+      - Request a place
+      - Join this shadowing opportunity
+    actions:
+      - GetAuthenticatedUser
+      - SubmitShadowRequestCapacitySafe
+    notes:
+      - Prevent duplicate active requests and oversubscription.
+      - Mentor approval routes to coordinator; no invite is sent automatically.
+  - name: Coordinator queue
+    triggerPhrases:
+      - Show coordinator queue
+      - Show invitation tasks
+    actions:
+      - GetAuthenticatedUser
+      - VerifyGroupMembership: ${PILOT_COORDINATORS_GROUP}
+      - ListCoordinatorQueue
+      - RecordInvitationOutcome
+      - ListScannerHealth
+  - name: Import approved export
+    triggerPhrases:
+      - Import Shadow App export
+      - Import ESXP export
+    actions:
+      - GetAuthenticatedUser
+      - VerifyGroupMembership: ${PILOT_COORDINATORS_GROUP}
+      - StartImportMapping
+      - PreviewImport
+      - ConfirmImport
+
