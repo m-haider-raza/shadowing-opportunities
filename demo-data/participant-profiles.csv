@@ -1,0 +1,6 @@
+UserObjectId,UserPrincipalName,DisplayName,Roles,Topics,DeliveryTypes,Languages,TimeZone,ExperienceLevel,DefaultShadowCapacity,NotificationPreference,MentorEnrollmentStatus,LearnerEnrollmentStatus
+mentor-001,mentor.one@example.invalid,Mentor One,Mentor,Azure Architecture;Security,Workshop;Design Review,English,Europe/Budapest,,2,daily,Enrolled,NotEnrolled
+mentor-002,mentor.two@example.invalid,Mentor Two,Mentor,Power Platform;Dynamics,Demo;Implementation Review,English;German,Europe/Berlin,,1,daily,Enrolled,NotEnrolled
+learner-001,learner.one@example.invalid,Learner One,Learner,Azure Architecture,Workshop,English,Europe/Budapest,beginner,,weekly,NotEnrolled,Enrolled
+coordinator-001,coordinator@example.invalid,Pilot Coordinator,Coordinator,,,,Europe/Budapest,,,NotEnrolled,NotEnrolled
+
