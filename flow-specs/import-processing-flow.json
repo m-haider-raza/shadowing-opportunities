@@ -1,0 +1,23 @@
+{
+  "name": "Shadowing - Approved Export Import",
+  "trigger": "Coordinator starts import after uploading approved CSV/XLSX export",
+  "steps": [
+    "read headers and sample rows",
+    "collect configurable mapping",
+    "validate required fields",
+    "generate preview with row-level errors",
+    "wait for coordinator confirmation",
+    "create or update private candidates by source ID or stable fingerprint",
+    "preserve provenance and source freshness",
+    "flag missing owner or missing publication authorization",
+    "detect possible overlaps with calendar-derived listings without automatic merge"
+  ],
+  "assumptionsAvoided": [
+    "no fixed ESXP schema",
+    "no ESXP API",
+    "no source refresh cadence assumption",
+    "no write-back",
+    "no automatic cancellation from missing rows unless complete snapshot is confirmed"
+  ]
+}
+
