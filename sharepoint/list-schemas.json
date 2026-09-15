@@ -1,0 +1,135 @@
+{
+  "siteUrl": "${SHAREPOINT_SITE_URL}",
+  "lists": [
+    {
+      "name": "ParticipantProfiles",
+      "permissions": "Pilot users read/write through flows; coordinators/admins operational read; direct writes restricted.",
+      "columns": [
+        {"name": "UserObjectId", "type": "Text", "required": true, "unique": true},
+        {"name": "UserPrincipalName", "type": "Text", "required": true},
+        {"name": "DisplayName", "type": "Text"},
+        {"name": "Roles", "type": "MultiChoice", "choices": ["Learner", "Mentor", "Coordinator", "Administrator"]},
+        {"name": "Topics", "type": "MultiChoiceOrManagedMetadata"},
+        {"name": "DeliveryTypes", "type": "MultiChoice"},
+        {"name": "Languages", "type": "MultiChoice"},
+        {"name": "TimeZone", "type": "Text"},
+        {"name": "ExperienceLevel", "type": "Choice", "choices": ["beginner", "intermediate", "advanced"]},
+        {"name": "LearningGoals", "type": "Note"},
+        {"name": "DefaultShadowCapacity", "type": "Number"},
+        {"name": "NotificationPreference", "type": "Choice", "choices": ["none", "daily", "weekly"]},
+        {"name": "RecommendationPaused", "type": "Boolean"},
+        {"name": "MentorEnrollmentStatus", "type": "Choice", "choices": ["NotEnrolled", "Enrolled", "Withdrawn"]},
+        {"name": "LearnerEnrollmentStatus", "type": "Choice", "choices": ["NotEnrolled", "Enrolled", "Paused"]}
+      ]
+    },
+    {
+      "name": "ScannerConfigurations",
+      "permissions": "Restricted to owning mentor through action/flow plus coordinators/admins.",
+      "columns": [
+        {"name": "MentorUserObjectId", "type": "Text", "required": true, "unique": true},
+        {"name": "ScanningEnabled", "type": "Boolean"},
+        {"name": "CalendarAndEmailConsent", "type": "Boolean"},
+        {"name": "FlowActivationStatus", "type": "Choice", "choices": ["NotActivated", "Activated", "Failed", "Paused", "Revoked"]},
+        {"name": "RunFrequency", "type": "Choice", "choices": ["daily"]},
+        {"name": "LookAheadDays", "type": "Number", "default": 14},
+        {"name": "LastSuccessfulRunUtc", "type": "DateTime"},
+        {"name": "LastAttemptUtc", "type": "DateTime"},
+        {"name": "LastErrorCategory", "type": "Choice", "choices": ["None", "Connection", "Authorization", "Classifier", "SharePoint", "Policy", "Unknown"]},
+        {"name": "LastErrorSummary", "type": "Text"},
+        {"name": "ConnectionOwnerUpnHash", "type": "Text"},
+        {"name": "RetentionDaysForCandidates", "type": "Number", "default": 30}
+      ]
+    },
+    {
+      "name": "PrivateCandidates",
+      "permissions": "No learner access; item inheritance broken or mentor-private storage; excluded from Copilot knowledge.",
+      "columns": [
+        {"name": "MentorUserObjectId", "type": "Text", "required": true},
+        {"name": "SourceType", "type": "Choice", "choices": ["CalendarEmailCorrelation", "ManualSubmission", "ApprovedExport"]},
+        {"name": "SourceReferenceHash", "type": "Text", "indexed": true},
+        {"name": "EventIdHash", "type": "Text"},
+        {"name": "EventFingerprint", "type": "Text"},
+        {"name": "CorrelationEvidenceSummary", "type": "Note"},
+        {"name": "PrivateReviewSummary", "type": "Note"},
+        {"name": "ProposedListingJson", "type": "Note"},
+        {"name": "ReviewVersion", "type": "Number"},
+        {"name": "Disposition", "type": "Choice", "choices": ["New", "InReview", "Approved", "Edited", "Rejected", "Superseded", "Expired"]},
+        {"name": "RiskFlags", "type": "MultiChoice"},
+        {"name": "RetentionDeleteAfterUtc", "type": "DateTime"}
+      ]
+    },
+    {
+      "name": "PublishedOpportunities",
+      "permissions": "Pilot learners read; writes only through publication/coordinator flows.",
+      "columns": [
+        {"name": "OpportunityPublicId", "type": "Text", "required": true, "unique": true},
+        {"name": "MentorUserObjectId", "type": "Text", "required": true},
+        {"name": "ApprovedCandidateId", "type": "Lookup"},
+        {"name": "ApprovedReviewVersion", "type": "Number"},
+        {"name": "Title", "type": "Text"},
+        {"name": "Description", "type": "Note"},
+        {"name": "Topic", "type": "ChoiceOrManagedMetadata"},
+        {"name": "DeliveryType", "type": "Choice"},
+        {"name": "StartUtc", "type": "DateTime"},
+        {"name": "EndUtc", "type": "DateTime"},
+        {"name": "TimeZone", "type": "Text"},
+        {"name": "Language", "type": "Choice"},
+        {"name": "Level", "type": "Choice", "choices": ["beginner", "intermediate", "advanced"]},
+        {"name": "Prerequisites", "type": "Note"},
+        {"name": "Capacity", "type": "Number"},
+        {"name": "ReservedSeats", "type": "Number"},
+        {"name": "Status", "type": "Choice", "choices": ["Published", "Full", "Withdrawn", "Expired", "NeedsReReview"]},
+        {"name": "Provenance", "type": "Choice", "choices": ["MentorScan", "Manual", "Import"]}
+      ]
+    },
+    {
+      "name": "ShadowRequests",
+      "permissions": "Learner own requests; mentor own opportunity requests; coordinators/admins queue.",
+      "columns": [
+        {"name": "RequestPublicId", "type": "Text", "required": true, "unique": true},
+        {"name": "ActiveRequestKey", "type": "Text", "unique": true},
+        {"name": "OpportunityPublicId", "type": "Text", "indexed": true},
+        {"name": "LearnerUserObjectId", "type": "Text", "indexed": true},
+        {"name": "MentorUserObjectId", "type": "Text", "indexed": true},
+        {"name": "LearnerObjective", "type": "Note"},
+        {"name": "Status", "type": "Choice", "choices": ["PendingMentor", "MentorDeclined", "MentorApproved", "CoordinatorQueued", "InvitationArranged", "InvitationNotAuthorized", "Withdrawn", "Cancelled", "Expired"]},
+        {"name": "PlaceReserved", "type": "Boolean"},
+        {"name": "MentorDecisionUtc", "type": "DateTime"},
+        {"name": "CoordinatorOutcome", "type": "Choice", "choices": ["Pending", "Arranged", "NotAuthorized", "NeedsMoreInfo", "Cancelled"]},
+        {"name": "CoordinatorNotes", "type": "Note"}
+      ]
+    },
+    {
+      "name": "ImportBatches",
+      "permissions": "Coordinators/admins only.",
+      "columns": [
+        {"name": "BatchId", "type": "Text", "required": true, "unique": true},
+        {"name": "SourceName", "type": "Text"},
+        {"name": "SourceFileName", "type": "Text"},
+        {"name": "SourceSnapshotType", "type": "Choice", "choices": ["CompleteSnapshot", "PartialExport", "Unknown"]},
+        {"name": "MappingJson", "type": "Note"},
+        {"name": "PreviewJson", "type": "Note"},
+        {"name": "Status", "type": "Choice", "choices": ["Uploaded", "Previewed", "Confirmed", "Processed", "Failed"]},
+        {"name": "ErrorSummary", "type": "Note"},
+        {"name": "RowsProcessed", "type": "Number"},
+        {"name": "RowsFailed", "type": "Number"}
+      ]
+    },
+    {
+      "name": "AuditHistory",
+      "permissions": "Append through flows; coordinators/admins read.",
+      "columns": [
+        {"name": "ActorUserObjectId", "type": "Text"},
+        {"name": "ActorRoleAtAction", "type": "Text"},
+        {"name": "Action", "type": "Text"},
+        {"name": "EntityType", "type": "Text"},
+        {"name": "EntityId", "type": "Text"},
+        {"name": "EntityVersion", "type": "Text"},
+        {"name": "TimestampUtc", "type": "DateTime"},
+        {"name": "Outcome", "type": "Choice", "choices": ["Success", "Failure", "Blocked"]},
+        {"name": "DetailsMinimized", "type": "Note"}
+      ]
+    }
+  ]
+}
+
